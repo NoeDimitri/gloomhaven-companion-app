@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gloomhaven companion app", "gloomhaven companion app\gloomhaven companion app.csproj", "{2CAE18A1-0F52-48CB-AAB6-7D744205168B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2CAE18A1-0F52-48CB-AAB6-7D744205168B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CAE18A1-0F52-48CB-AAB6-7D744205168B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CAE18A1-0F52-48CB-AAB6-7D744205168B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CAE18A1-0F52-48CB-AAB6-7D744205168B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FD761679-3D15-44B3-875B-9225D2D6C375}
+	EndGlobalSection
+EndGlobal
