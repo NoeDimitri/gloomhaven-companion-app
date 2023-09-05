@@ -2,6 +2,7 @@
 
 public class GameEntity
 {
+
 	public long Id { get; set; }
 	public string EntityName { get; set; }
 
