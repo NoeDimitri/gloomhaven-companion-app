@@ -22,6 +22,7 @@ if (!app.Environment.IsDevelopment())
 }
 else
 {
+    // URL is currently https://localhost:7229/swagger/index.html
     app.UseSwagger();
     app.UseSwaggerUI();
 }
