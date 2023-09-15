@@ -7,12 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using gloomhaven_companion_app.Models;
 using Humanizer.Localisation.TimeToClockNotation;
+using System.ComponentModel.DataAnnotations;
 
 namespace gloomhaven_companion_app.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GameEntitiesController : ControllerBase
+    public class GameEntitiesController : Controller
     {
         private readonly GameEntityContext _context;
 
@@ -21,7 +22,9 @@ namespace gloomhaven_companion_app.Controllers
             _context = context;
         }
 
-        // GET: api/GameEntities
+
+        #region Get API calls
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GameEntity>>> GetGameEntities()
         {
@@ -42,7 +45,6 @@ namespace gloomhaven_companion_app.Controllers
             return await _context.GameEntities.OrderBy(x => x.initiative).ToListAsync();
         }
 
-        // GET: api/GameEntities/5
         [HttpGet("{id}")]
         public async Task<ActionResult<GameEntity>> GetGameEntity(long id)
         {
@@ -60,13 +62,16 @@ namespace gloomhaven_companion_app.Controllers
             return gameEntity;
         }
 
+        #endregion
+
+        #region PUT Api calls
         // PUT: api/GameEntities/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutGameEntity(long id, int newInitiative)
         {
             GameEntity selectedEntity;
-            if ((selectedEntity = _context.GameEntities.Find(id)) == null)
+            if ((selectedEntity = _context.GameEntities.Find(id)!) == null)
             {
                 return BadRequest();
             }
@@ -94,6 +99,9 @@ namespace gloomhaven_companion_app.Controllers
             return NoContent();
         }
 
+        #endregion
+
+        #region POST Api calls
         // POST: api/GameEntities
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -109,19 +117,42 @@ namespace gloomhaven_companion_app.Controllers
             return CreatedAtAction("GetGameEntity", new { id = gameEntity.Id }, gameEntity);
         }
 
-        [HttpPost("CreateNewPlayer")]
-        public async Task<ActionResult<GameEntity>> PostNewGameEntity(string entityName)
+        // [HttpPost("{playername}")]
+        // public async Task<ActionResult<GameEntity>> PostNewGameEntity(string playerName)
+        // {
+            
+        //     if (playerName == null)
+        //     {
+        //         return Problem("No playername provided.");
+        //     }
+
+        //     GameEntity newEntity = new GameEntity();
+        //     int numEntity = _context.GameEntities.Count<GameEntity>()+1; // Get max ID value instead of count
+
+        //     newEntity.Id = numEntity;
+        //     newEntity.EntityName = playerName;
+        //     newEntity.initiative = -1;
+
+        //     _context.GameEntities.Add(newEntity);
+        //     await _context.SaveChangesAsync();
+
+        //     return CreatedAtAction("GetGameEntity", new { id = newEntity.Id }, newEntity);
+        // }
+
+        [HttpPost("CreateEntity")]
+        public async Task<ActionResult<GameEntity>> backendCreateEntity([FromBody] string playerName)
         {
-            if (entityName == null)
+            
+            if (playerName == null)
             {
                 return Problem("No playername provided.");
             }
 
             GameEntity newEntity = new GameEntity();
-            int numEntity = _context.GameEntities.Count<GameEntity>()+1;
+            int numEntity = _context.GameEntities.Count<GameEntity>()+1; // Get max ID value instead of count
 
             newEntity.Id = numEntity;
-            newEntity.EntityName = entityName;
+            newEntity.EntityName = playerName;
             newEntity.initiative = -1;
 
             _context.GameEntities.Add(newEntity);
@@ -130,6 +161,9 @@ namespace gloomhaven_companion_app.Controllers
             return CreatedAtAction("GetGameEntity", new { id = newEntity.Id }, newEntity);
         }
 
+        #endregion
+
+        #region DELETE api calls
         // DELETE: api/GameEntities/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGameEntity(long id)
@@ -149,6 +183,8 @@ namespace gloomhaven_companion_app.Controllers
 
             return NoContent();
         }
+
+        #endregion
 
         private bool GameEntityExists(long id)
         {

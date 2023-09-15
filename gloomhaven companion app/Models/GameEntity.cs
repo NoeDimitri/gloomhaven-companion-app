@@ -4,8 +4,7 @@ public class GameEntity
 {
 
 	public long Id { get; set; }
-	public string EntityName { get; set; }
-
+	public string EntityName { get; set; } = null!; // Quick fix so it stops throwing errors at me reee
 	public int initiative { get; set; }
 
 
