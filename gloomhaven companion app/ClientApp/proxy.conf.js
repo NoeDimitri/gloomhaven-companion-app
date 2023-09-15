@@ -13,6 +13,16 @@ const PROXY_CONFIG = [
     headers: {
       Connection: 'Keep-Alive'
     }
+  },
+  {
+    context: [
+      "/api/GameEntities",
+   ],
+    target: target,
+    secure: false,
+    headers: {
+      Connection: 'Keep-Alive'
+    }
   }
 ]
 
