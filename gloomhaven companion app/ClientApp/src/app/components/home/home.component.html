@@ -1,1 +1,20 @@
-freddy fazbear
+
+<h1>
+    Create new player: <input type="text" id="newEntityName" [(ngModel)]="newEntityName">
+</h1>
+
+<button (click)="createNewEntity(newEntityName)">
+    create new player??
+</button>
+<br>
+<button (click)="updateInitiativeList()">
+    Update crap!!
+</button>
+
+
+<li *ngFor="let entity of entities">
+
+    {{entity.entityName}} : Initiative {{entity.initiative}}
+
+</li>
+

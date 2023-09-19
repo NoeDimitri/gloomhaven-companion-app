@@ -18,6 +18,11 @@ export class ApiService {
     return this.http.post(this.baseUrl + 'api/GameEntities/CreateEntity', JSON.stringify(playerName), {'headers': headers});
   }
 
+  resetInitiatives(){
+    const headers = { 'content-type': 'application/json'} ;
+
+    return this.http.put<any>(this.baseUrl + 'api/GameEntities/resetInitiative', null);
+  }
 
   addEntity(){
     // console.log(this.baseUrl + 'api/GameEntities/sorted');

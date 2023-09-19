@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { EntityInitiative } from 'src/app/interfaces/entity-initiative';
 
 @Component({
   selector: 'app-initiative-container',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InitiativeContainerComponent implements OnInit {
 
+  @Input() entity! : EntityInitiative;
+
   constructor() { }
 
   ngOnInit(): void {
+    
   }
 
 }

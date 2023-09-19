@@ -67,6 +67,28 @@ namespace gloomhaven_companion_app.Controllers
         #region PUT Api calls
         // PUT: api/GameEntities/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("resetInitiative")]
+        public async Task<ActionResult<IEnumerable<GameEntity>>> resetInitiatives(){
+
+            var entities = await _context.GameEntities.ToListAsync();
+
+            // temporary LAME fix
+            foreach (var entity in entities){
+                entity.initiative = -1;
+            }
+
+            // why this no work
+            // await _context.GameEntities.ExecuteUpdateAsync(e =>
+            // e.SetProperty(b => b.initiative, b => b.initiative + 100));
+
+            // return await _context.GameEntities.AsNoTracking().ToListAsync();
+
+            await _context.SaveChangesAsync();
+
+
+            return await _context.GameEntities.ToArrayAsync();
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> PutGameEntity(long id, int newInitiative)
         {
@@ -114,7 +136,7 @@ namespace gloomhaven_companion_app.Controllers
             _context.GameEntities.Add(gameEntity);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetGameEntity", new { id = gameEntity.Id }, gameEntity);
+            return CreatedAtAction("GetGameEntity", new { id = gameEntity.id }, gameEntity);
         }
 
         // [HttpPost("{playername}")]
@@ -149,16 +171,20 @@ namespace gloomhaven_companion_app.Controllers
             }
 
             GameEntity newEntity = new GameEntity();
-            int numEntity = _context.GameEntities.Count<GameEntity>()+1; // Get max ID value instead of count
 
-            newEntity.Id = numEntity;
-            newEntity.EntityName = playerName;
+            // If there are no entities, set id to 0. Otherwise use max + 1
+            // I think this is bugged haha
+            int numEntity = _context.GameEntities.Count() != 0 ?
+                _context.GameEntities.Max(e => e.initiative)+1 : 0;
+
+            newEntity.id = numEntity;
+            newEntity.entityName = playerName;
             newEntity.initiative = -1;
 
             _context.GameEntities.Add(newEntity);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetGameEntity", new { id = newEntity.Id }, newEntity);
+            return CreatedAtAction("GetGameEntity", new { id = newEntity.id }, newEntity);
         }
 
         #endregion
@@ -188,7 +214,7 @@ namespace gloomhaven_companion_app.Controllers
 
         private bool GameEntityExists(long id)
         {
-            return (_context.GameEntities?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.GameEntities?.Any(e => e.id == id)).GetValueOrDefault();
         }
     }
 }
