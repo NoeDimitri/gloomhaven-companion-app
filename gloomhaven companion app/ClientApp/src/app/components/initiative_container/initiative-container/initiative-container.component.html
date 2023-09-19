@@ -2,4 +2,17 @@
 <div class="container">
     Name: {{entity.entityName}}
     Initiative: {{entity.initiative}}
+    <br>
+
+        new Initiative: <input type="text" id="newInitiative" [(ngModel)]="newInitiative">
+    
+    <br>
+    
+    <button (click)="updateInitiative(newInitiative)">
+        update
+    </button>
+    <button (click)="deleteEntity()">
+        delete player
+    </button>
+    <br>
 </div>

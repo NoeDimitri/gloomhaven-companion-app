@@ -131,7 +131,7 @@ namespace gloomhaven_companion_app.Controllers
         {
           if (_context.GameEntities == null)
           {
-              return Problem("Entity set 'GameEntityContext.GameEntities'  is null.");
+              return Problem("Entity set 'GameEntityContext.GameEntities' is null.");
           }
             _context.GameEntities.Add(gameEntity);
             await _context.SaveChangesAsync();
@@ -162,10 +162,10 @@ namespace gloomhaven_companion_app.Controllers
         // }
 
         [HttpPost("CreateEntity")]
-        public async Task<ActionResult<GameEntity>> backendCreateEntity([FromBody] string playerName)
+        public async Task<ActionResult<GameEntity>> backendCreateEntity(string entityName)
         {
             
-            if (playerName == null)
+            if (entityName == null)
             {
                 return Problem("No playername provided.");
             }
@@ -174,11 +174,11 @@ namespace gloomhaven_companion_app.Controllers
 
             // If there are no entities, set id to 0. Otherwise use max + 1
             // I think this is bugged haha
-            int numEntity = _context.GameEntities.Count() != 0 ?
-                _context.GameEntities.Max(e => e.initiative)+1 : 0;
+            long numEntity = _context.GameEntities.Count() != 0 ?
+                _context.GameEntities.Max(e => e.id)+1 : 0;
 
             newEntity.id = numEntity;
-            newEntity.entityName = playerName;
+            newEntity.entityName = entityName;
             newEntity.initiative = -1;
 
             _context.GameEntities.Add(newEntity);

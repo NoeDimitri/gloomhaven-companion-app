@@ -12,9 +12,7 @@
 </button>
 
 
-<li *ngFor="let entity of entities">
-
-    {{entity.entityName}} : Initiative {{entity.initiative}}
-
-</li>
+<div *ngFor="let entity of entities">
+    <app-initiative-container [entity]="entity" (childEmitter)="getUpdateEvent()"></app-initiative-container>
+</div>
 

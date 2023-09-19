@@ -129,5 +129,8 @@
       }
     }
   },
-  "defaultProject": "gloomhaven_companion_app"
+  "defaultProject": "gloomhaven_companion_app",
+  "cli": {
+    "analytics": "6b47806b-6d6a-4b49-a345-2e367be1f095"
+  }
 }

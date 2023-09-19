@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit , EventEmitter, Output} from '@angular/core';
 import { EntityInitiative } from 'src/app/interfaces/entity-initiative';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-initiative-container',
@@ -9,11 +10,25 @@ import { EntityInitiative } from 'src/app/interfaces/entity-initiative';
 export class InitiativeContainerComponent implements OnInit {
 
   @Input() entity! : EntityInitiative;
+  @Output() childEmitter: EventEmitter<any> = new EventEmitter();
 
-  constructor() { }
+  newInitiative! : number;
+
+  constructor(private apiService : ApiService) { }
 
   ngOnInit(): void {
     
   }
 
+  updateInitiative(newInitiative : number){
+    this.apiService.updateEntityInitiative(this.entity.id, newInitiative).subscribe(data => {
+      this.childEmitter.emit("update initiative!");
+    });
+  }
+
+  deleteEntity(){
+    this.apiService.deleteEntity(this.entity.id).subscribe(data => {
+      this.childEmitter.emit("update character list");
+    });
+  }
 }

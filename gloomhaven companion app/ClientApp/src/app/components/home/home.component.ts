@@ -18,9 +18,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // this.api.addPlayerEntity("bob").subscribe(data => {
-    //   console.log(data);
-    // });
 
     // this.api.resetInitiatives().subscribe(data => {
     //   console.log("pogger")
@@ -32,19 +29,22 @@ export class HomeComponent implements OnInit {
   }
 
   updateInitiativeList(){
-    console.log("hi")
     this.api.getSortedEntities().subscribe(data => {
       this.entities = data
     })
   }
 
-  createNewEntity(entityName : string){
+  async createNewEntity(entityName : string){
     if (entityName == "") return;
 
-    this.api.addPlayerEntity(entityName).subscribe(data => {
+    this.api.addEntity(entityName).subscribe(data => {
       console.log(data);
+      this.updateInitiativeList();
     });
 
+  }
+
+  getUpdateEvent(){
     this.updateInitiativeList();
   }
   

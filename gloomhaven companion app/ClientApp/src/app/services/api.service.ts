@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, Inject } from '@angular/core';
 
 @Injectable({
@@ -10,12 +10,13 @@ export class ApiService {
 
   getSortedEntities(){
     // console.log(this.baseUrl + 'api/GameEntities/sorted');
-    return this.http.get<any>(this.baseUrl + 'api/GameEntities');
+    return this.http.get<any>(this.baseUrl + 'api/GameEntities/sorted');
   }
 
-  addPlayerEntity(playerName : string){
+  addEntity(entityName : string){
     const headers = { 'content-type': 'application/json'} ;
-    return this.http.post(this.baseUrl + 'api/GameEntities/CreateEntity', JSON.stringify(playerName), {'headers': headers});
+    let params = new HttpParams().set('entityName' , entityName);
+    return this.http.post(this.baseUrl + 'api/GameEntities/CreateEntity', null, {'params': params});
   }
 
   resetInitiatives(){
@@ -24,13 +25,13 @@ export class ApiService {
     return this.http.put<any>(this.baseUrl + 'api/GameEntities/resetInitiative', null);
   }
 
-  addEntity(){
-    // console.log(this.baseUrl + 'api/GameEntities/sorted');
-    const headers = { 'content-type': 'application/json'} ;
-    
-    const newHomie = {"entityName" : "paul"}
-    const body = JSON.stringify(newHomie);
+  updateEntityInitiative(id : number, newInitiative : number){
 
-    return this.http.post(this.baseUrl + body, "paul");
+    let params = new HttpParams().set('newInitiative', newInitiative);
+    return this.http.put(this.baseUrl + 'api/GameEntities/' + id, null, {'params':params});
+  }
+
+  deleteEntity(id : number){
+    return this.http.delete(this.baseUrl + 'api/GameEntities/' + id);
   }
 }
