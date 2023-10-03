@@ -38,7 +38,6 @@ export class HomeComponent implements OnInit {
     if (entityName == "") return;
 
     this.api.addEntity(entityName).subscribe(data => {
-      console.log(data);
       this.updateInitiativeList();
     });
 
@@ -46,6 +45,13 @@ export class HomeComponent implements OnInit {
 
   getUpdateEvent(){
     this.updateInitiativeList();
+  }
+
+  resetInitiatives(){
+
+    this.api.resetInitiatives().subscribe(data => {
+      this.updateInitiativeList();
+    })
   }
   
 }

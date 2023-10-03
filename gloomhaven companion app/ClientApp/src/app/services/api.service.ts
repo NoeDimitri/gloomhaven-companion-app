@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, Inject } from '@angular/core';
+import { catchError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

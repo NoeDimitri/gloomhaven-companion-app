@@ -1,4 +1,5 @@
 import { Component, Input, OnInit , EventEmitter, Output} from '@angular/core';
+import { catchError, throwError } from 'rxjs';
 import { EntityInitiative } from 'src/app/interfaces/entity-initiative';
 import { ApiService } from 'src/app/services/api.service';
 
@@ -21,6 +22,11 @@ export class InitiativeContainerComponent implements OnInit {
   }
 
   updateInitiative(newInitiative : number){
+    if(!newInitiative || isNaN(Number(newInitiative)))
+    {
+      throw Error("invalid input");
+    }
+
     this.apiService.updateEntityInitiative(this.entity.id, newInitiative).subscribe(data => {
       this.childEmitter.emit("update initiative!");
     });
