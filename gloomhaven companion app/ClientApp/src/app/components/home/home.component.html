@@ -3,13 +3,14 @@
     Create new player: <input type="text" id="newEntityName" [(ngModel)]="newEntityName">
 </h1>
 
-<button (click)="createNewEntity(newEntityName)">
+<button class="btn btn-primary" (click)="createNewEntity(newEntityName)" >
     create new player??
 </button>
-<br>
-<button (click)="resetInitiatives()">
+<button class="btn btn-primary" (click)="resetInitiatives()" style="margin: 1rem;">
     reset initiatives
 </button>
+
+<h2>Initiative Order</h2>
 
 <ng-container *ngFor="let entity of entities">
     <div *ngIf="entity.initiative > 0">
@@ -17,9 +18,9 @@
     </div>
 </ng-container>
 
-
 <br>
-Players yet to act lol
+
+<h2>Players yet to act lol</h2>
 
 <ng-container *ngFor="let entity of entities">
     <div *ngIf="entity.initiative <= 0">
