@@ -5,9 +5,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<GameEntityContext>(opt =>
-    opt.UseInMemoryDatabase("gloomhaven_companion_app"));
+    opt.UseNpgsql(builder.Configuration.GetConnectionString("gloomhaven_companion_app")));
 builder.Services.AddSwaggerGen();
 
 

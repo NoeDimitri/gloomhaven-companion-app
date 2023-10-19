@@ -22,7 +22,6 @@ namespace gloomhaven_companion_app.Controllers
             _context = context;
         }
 
-
         #region Get API calls
 
         [HttpGet]
