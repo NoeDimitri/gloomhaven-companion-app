@@ -1,20 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
-import { OnInit } from '@angular/core';
 import { EntityInitiative } from 'src/app/interfaces/entity-initiative';
 
-import { FormsModule } from '@angular/forms';
-import { NgModel } from '@angular/forms';
-
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
+  selector: 'app-initiative-page',
+  templateUrl: './initiative-page.component.html',
+  styleUrls: ['./initiative-page.component.css']
 })
-export class HomeComponent implements OnInit {
+export class InitiativePageComponent implements OnInit {
+
   constructor(private api : ApiService) {}
 
   entities : EntityInitiative[] = [];
   newEntityName : string = "";
+  isPlayer : boolean = false;
 
   ngOnInit(): void {
 
@@ -52,6 +51,11 @@ export class HomeComponent implements OnInit {
     this.api.resetInitiatives().subscribe(data => {
       this.updateInitiativeList();
     })
+  }
+
+  test()
+  {
+    console.log(this.isPlayer);
   }
   
 }

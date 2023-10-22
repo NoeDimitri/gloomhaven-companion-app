@@ -3,12 +3,31 @@
     Create new player: <input type="text" id="newEntityName" [(ngModel)]="newEntityName">
 </h1>
 
+
 <button class="btn btn-primary" (click)="createNewEntity(newEntityName)" >
     create new player??
 </button>
 <button class="btn btn-primary" (click)="resetInitiatives()" style="margin: 1rem;">
     reset initiatives
 </button>
+
+<div class="form-check form-switch" style="display:inline-block; vertical-align: middle;">
+    <input
+      mdbCheckbox
+      class="form-check-input"
+      type="checkbox"
+      id="flexSwitchCheckDefault"
+      style="height: 2rem; width: 4rem; margin-right: 1rem;"
+      (input)="isPlayer"
+    />
+    <label style="display: inline-block; vertical-align: middle;"
+      >Is player?</label
+    >
+</div>
+<button class="btn btn-primary" (click)="test()" style="margin: 1rem;">
+    test lmaoo
+</button>
+
 
 <h2>Initiative Order</h2>
 
