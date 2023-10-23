@@ -161,7 +161,7 @@ namespace gloomhaven_companion_app.Controllers
         // }
 
         [HttpPost("CreateEntity")]
-        public async Task<ActionResult<GameEntity>> backendCreateEntity(string entityName)
+        public async Task<ActionResult<GameEntity>> backendCreateEntity(string entityName, bool isPlayer)
         {
             
             if (entityName == null)
@@ -179,6 +179,7 @@ namespace gloomhaven_companion_app.Controllers
             newEntity.id = numEntity;
             newEntity.entityName = entityName;
             newEntity.initiative = -1;
+            newEntity.isPlayer = isPlayer;
 
             _context.GameEntities.Add(newEntity);
             await _context.SaveChangesAsync();

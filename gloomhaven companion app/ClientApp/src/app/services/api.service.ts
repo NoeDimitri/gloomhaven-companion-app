@@ -14,9 +14,9 @@ export class ApiService {
     return this.http.get<any>(this.baseUrl + 'api/GameEntities/sorted');
   }
 
-  addEntity(entityName : string){
+  addEntity(entityName : string, isPlayer: boolean){
     const headers = { 'content-type': 'application/json'} ;
-    let params = new HttpParams().set('entityName' , entityName);
+    let params = new HttpParams().set('entityName' , entityName).set('isPlayer', isPlayer);
     return this.http.post(this.baseUrl + 'api/GameEntities/CreateEntity', null, {'params': params});
   }
 

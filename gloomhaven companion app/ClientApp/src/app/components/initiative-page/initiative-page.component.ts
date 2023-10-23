@@ -17,12 +17,6 @@ export class InitiativePageComponent implements OnInit {
 
   ngOnInit(): void {
 
-
-    // this.api.resetInitiatives().subscribe(data => {
-    //   console.log("pogger")
-    //   console.log(data)
-    // })
-
     this.updateInitiativeList();
 
   }
@@ -36,7 +30,7 @@ export class InitiativePageComponent implements OnInit {
   async createNewEntity(entityName : string){
     if (entityName == "") return;
 
-    this.api.addEntity(entityName).subscribe(data => {
+    this.api.addEntity(entityName, this.isPlayer).subscribe(data => {
       this.updateInitiativeList();
     });
 
@@ -53,9 +47,4 @@ export class InitiativePageComponent implements OnInit {
     })
   }
 
-  test()
-  {
-    console.log(this.isPlayer);
-  }
-  
 }

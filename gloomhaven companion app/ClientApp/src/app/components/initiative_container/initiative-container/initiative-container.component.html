@@ -1,7 +1,7 @@
 
 <div class="container">
-    <div class="panel panel-primary">
-        <div class="panel-heading d-flex justify-content-between">
+    <div class="panel" [ngClass]="entity.isPlayer ? 'init-panel-player' : 'init-panel-enemy'">
+        <div class="header-init d-flex justify-content-between" [ngClass]="entity.isPlayer ? 'header-player' : 'header-enemy'">
             <div class="p-2" style="display: flex; align-items: center;"><h2>{{entity.entityName}}</h2></div>
             <div class="p-2"> <b>Initiative</b><h2 style="margin: 0rem;">{{entity.initiative}}</h2></div>
         </div>

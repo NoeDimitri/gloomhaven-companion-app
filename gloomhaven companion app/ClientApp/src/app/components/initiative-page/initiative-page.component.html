@@ -18,16 +18,15 @@
       type="checkbox"
       id="flexSwitchCheckDefault"
       style="height: 2rem; width: 4rem; margin-right: 1rem;"
-      (input)="isPlayer"
+      [(ngModel)]="isPlayer"
     />
-    <label style="display: inline-block; vertical-align: middle;"
-      >Is player?</label
+    <label *ngIf="isPlayer" style="display: inline-block; vertical-align: middle;"
+      >Is player</label
+    >
+    <label *ngIf="!isPlayer" style="display: inline-block; vertical-align: middle;"
+      >Is enemy</label
     >
 </div>
-<button class="btn btn-primary" (click)="test()" style="margin: 1rem;">
-    test lmaoo
-</button>
-
 
 <h2>Initiative Order</h2>
 
