@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit , EventEmitter, Output } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { EntityInitiative } from 'src/app/interfaces/entity-initiative';
+import { EntityService } from '../../services/entity.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-initiative-page',
@@ -9,42 +11,30 @@ import { EntityInitiative } from 'src/app/interfaces/entity-initiative';
 })
 export class InitiativePageComponent implements OnInit {
 
-  constructor(private api : ApiService) {}
+  constructor(private api : ApiService, private entityService:EntityService) {}
 
-  entities : EntityInitiative[] = [];
+  entities: EntityInitiative[] = [];
   newEntityName : string = "";
   isPlayer : boolean = false;
 
   ngOnInit(): void {
 
-    this.updateInitiativeList();
-
+    this.entityService.getEntityObservable().subscribe((data) => {
+      this.entities = data;
+    })
+    this.entityService.updateInitiativeList();
   }
 
   updateInitiativeList(){
-    this.api.getSortedEntities().subscribe(data => {
-      this.entities = data
-    })
+    this.entityService.updateInitiativeList();
   }
 
   async createNewEntity(entityName : string){
-    if (entityName == "") return;
-
-    this.api.addEntity(entityName, this.isPlayer).subscribe(data => {
-      this.updateInitiativeList();
-    });
-
-  }
-
-  getUpdateEvent(){
-    this.updateInitiativeList();
+    this.entityService.createNewEntity(entityName);
   }
 
   resetInitiatives(){
-
-    this.api.resetInitiatives().subscribe(data => {
-      this.updateInitiativeList();
-    })
+    this.entityService.resetInitiatives();
   }
 
 }

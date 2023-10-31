@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { EntityInitiative } from 'src/app/interfaces/entity-initiative';
 import { ApiService } from 'src/app/services/api.service';
+import { Observable } from 'rxjs';
+import { EntityService } from '../../services/entity.service';
 
 @Component({
   selector: 'app-player-menu',
@@ -9,7 +11,8 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class PlayerMenuComponent implements OnInit {
 
-  constructor(private apiService : ApiService) { }
+  constructor(private apiService : ApiService, private entityService: EntityService) { }
+
 
   playerList : EntityInitiative[] = [];
   newEntityName : string = "";
@@ -17,20 +20,15 @@ export class PlayerMenuComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.updateInitiativeList();
-
-  }
-
-  updateInitiativeList(){
-    this.apiService.getSortedEntities().subscribe(data => {
+    this.entityService.getEntityObservable().subscribe((data) => {
       data.forEach((element: EntityInitiative) => {
-        console.log(element.entityName)
-        if(element.isPlayer)
-        {
+        if (element.isPlayer) {
           this.playerList.push(element)
         }
       });
-    })
+    });
+
+    this.entityService.updateInitiativeList();
   }
 
 }

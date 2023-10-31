@@ -32,7 +32,7 @@
 
 <ng-container *ngFor="let entity of entities">
     <div *ngIf="entity.initiative > 0">
-        <app-initiative-container [entity]="entity" (childEmitter)="getUpdateEvent()"></app-initiative-container>
+        <app-initiative-container [entity]="entity" (childEmitter)="updateInitiativeList()"></app-initiative-container>
     </div>
 </ng-container>
 
@@ -42,6 +42,6 @@
 
 <ng-container *ngFor="let entity of entities">
     <div *ngIf="entity.initiative <= 0">
-        <app-initiative-container [entity]="entity" (childEmitter)="getUpdateEvent()"></app-initiative-container>
+        <app-initiative-container [entity]="entity" (childEmitter)="updateInitiativeList()"></app-initiative-container>
     </div>
 </ng-container>
