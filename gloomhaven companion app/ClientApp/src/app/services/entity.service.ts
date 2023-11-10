@@ -2,13 +2,26 @@ import { Injectable, OnInit } from '@angular/core';
 import { ApiService } from './api.service';
 import { EntityInitiative } from 'src/app/interfaces/entity-initiative';
 import { Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import * as signalR from '@microsoft/signalr';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EntityService implements OnInit {
 
+  // create connection to signalR hub
   constructor(private api: ApiService) {
+
+    const connection = new signalR.HubConnectionBuilder()
+      .configureLogging(signalR.LogLevel.Information)
+      .withUrl("https://localhost:7229/updateHub")
+      .build();
+    
+    connection.on("update", () => {
+      this.updateInitiativeList();
+    });
+    connection.start();
 
   }
 
@@ -17,8 +30,6 @@ export class EntityService implements OnInit {
   isPlayer: boolean = false;
 
   ngOnInit(): void {
-
-    this.updateInitiativeList();
   }
 
   getEntityObservable() {

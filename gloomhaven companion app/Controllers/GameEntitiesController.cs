@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using gloomhaven_companion_app.Models;
 using Humanizer.Localisation.TimeToClockNotation;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.SignalR;
+using AspAngularTemplate.Hubs;
 
 namespace gloomhaven_companion_app.Controllers
 {
@@ -16,10 +18,12 @@ namespace gloomhaven_companion_app.Controllers
     public class GameEntitiesController : Controller
     {
         private readonly GameEntityContext _context;
+        private readonly IHubContext<updateHub> _hubContext;  
 
-        public GameEntitiesController(GameEntityContext context)
+        public GameEntitiesController(GameEntityContext context, IHubContext<updateHub> hubContext)
         {
             _context = context;
+            _hubContext = hubContext;
         }
 
         #region Get API calls
@@ -83,7 +87,7 @@ namespace gloomhaven_companion_app.Controllers
             // return await _context.GameEntities.AsNoTracking().ToListAsync();
 
             await _context.SaveChangesAsync();
-
+            await _hubContext.Clients.All.SendAsync("update");
 
             return await _context.GameEntities.ToArrayAsync();
         }
@@ -137,28 +141,6 @@ namespace gloomhaven_companion_app.Controllers
 
             return CreatedAtAction("GetGameEntity", new { id = gameEntity.id }, gameEntity);
         }
-
-        // [HttpPost("{playername}")]
-        // public async Task<ActionResult<GameEntity>> PostNewGameEntity(string playerName)
-        // {
-            
-        //     if (playerName == null)
-        //     {
-        //         return Problem("No playername provided.");
-        //     }
-
-        //     GameEntity newEntity = new GameEntity();
-        //     int numEntity = _context.GameEntities.Count<GameEntity>()+1; // Get max ID value instead of count
-
-        //     newEntity.Id = numEntity;
-        //     newEntity.EntityName = playerName;
-        //     newEntity.initiative = -1;
-
-        //     _context.GameEntities.Add(newEntity);
-        //     await _context.SaveChangesAsync();
-
-        //     return CreatedAtAction("GetGameEntity", new { id = newEntity.Id }, newEntity);
-        // }
 
         [HttpPost("CreateEntity")]
         public async Task<ActionResult<GameEntity>> backendCreateEntity(string entityName, bool isPlayer)

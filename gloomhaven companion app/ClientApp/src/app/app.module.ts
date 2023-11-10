@@ -26,8 +26,6 @@ import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
 import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SignalRService } from './services/signalr.service';
-import { PrivateSignalRService } from './services/signalr.service.private';
 
 
 
@@ -64,11 +62,6 @@ import { PrivateSignalRService } from './services/signalr.service.private';
     MdbValidationModule,
     BrowserAnimationsModule
   ],
-  providers: [
-    {
-      provide: SignalRService,
-      useClass: PrivateSignalRService
-    }  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
