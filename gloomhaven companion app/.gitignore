@@ -234,3 +234,5 @@ _Pvt_Extensions
 
 *.json
 *.pack
+
+node_modules
