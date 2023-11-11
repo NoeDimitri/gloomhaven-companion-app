@@ -1,0 +1,24 @@
+
+<div class="container">
+    <div class="panel" [ngClass]="entity.isPlayer ? 'init-panel-player' : 'init-panel-enemy'">
+        <div class="header-init d-flex justify-content-between" [ngClass]="entity.isPlayer ? 'header-player' : 'header-enemy'">
+            <div class="p-2" style="display: flex; align-items: center;"><h2>{{entity.entityName}}</h2></div>
+            <div class="p-2"> <b>Initiative</b><h2 style="margin: 0rem;">{{entity.initiative}}</h2></div>
+        </div>
+        <div class="panel-body">
+                new Initiative: <input type="text" id="newInitiative" [(ngModel)]="newInitiative">
+            <br>
+            
+            <button *ngIf="entity.initiative <= 0" (click)="updateInitiative(newInitiative)" style="margin:1rem" class="btn btn-primary">
+                update
+            </button>
+            <button *ngIf="entity.initiative >= 1" (click)="updateInitiative(-1)" style="margin:1rem" class="btn btn-primary">
+                turn finished
+            </button>
+            <button (click)="deleteEntity()" style="margin:1rem" class="btn btn-danger">
+                delete player
+            </button>
+            <br>
+        </div>
+    </div>
+</div>

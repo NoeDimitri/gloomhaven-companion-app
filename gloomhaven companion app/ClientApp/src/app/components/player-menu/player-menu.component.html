@@ -7,7 +7,7 @@ Select Player
         <ng-template #blankName>No player selected</ng-template>
     </button>
     <div #player class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <button class="dropdown-item" *ngFor="let entity of playerList" (click)="changePlayer(entity)">
+      <button class="dropdown-item" *ngFor="let entity of playerList; trackBy:identify" (click)="changePlayer(entity)">
         {{entity.entityName}}
       </button>
     </div>

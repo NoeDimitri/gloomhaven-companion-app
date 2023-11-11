@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
-import { InitiativeContainerComponent } from './components/initiative_container/initiative-container/initiative-container.component';
+import { InitiativeContainerComponent } from './components/initiative_container/initiative-container.component';
 import { InitiativePageComponent } from './components/initiative-page/initiative-page.component';
 import { PlayerMenuComponent } from './components/player-menu/player-menu.component';
 
@@ -26,7 +26,6 @@ import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
 import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 
 
 @NgModule({

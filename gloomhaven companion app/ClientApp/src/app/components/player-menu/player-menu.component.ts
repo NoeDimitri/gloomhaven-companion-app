@@ -19,6 +19,7 @@ export class PlayerMenuComponent implements OnInit {
   ngOnInit(): void {
 
     this.entityService.getEntityObservable().subscribe((data) => {
+      this.playerList = [];
       data.forEach((element: EntityInitiative) => {
         if (element.isPlayer) {
           this.playerList.push(element)
@@ -38,8 +39,11 @@ export class PlayerMenuComponent implements OnInit {
   {
     
   }
-//   <button *ngIf="entity.initiative <= 0" (click)="updateInitiative(newInitiative)" style="margin:1rem" class="btn btn-primary">
-//   update
-// </button>
+
+  identify(index: number, item: any)
+  {
+    return item.id;
+  }
+
 
 }
