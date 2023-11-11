@@ -27,7 +27,6 @@ export class EntityService implements OnInit {
 
   entitySubject: Subject<EntityInitiative[]> = new Subject<EntityInitiative[]>;
   newEntityName: string = "";
-  isPlayer: boolean = false;
 
   ngOnInit(): void {
   }
@@ -42,10 +41,10 @@ export class EntityService implements OnInit {
     })
   }
 
-  async createNewEntity(entityName: string) {
+  async createNewEntity(entityName: string, isPlayer : boolean) {
     if (entityName == "") return;
 
-    this.api.addEntity(entityName, this.isPlayer).subscribe(data => {
+    this.api.addEntity(entityName, isPlayer).subscribe(data => {
       this.updateInitiativeList();
     });
 

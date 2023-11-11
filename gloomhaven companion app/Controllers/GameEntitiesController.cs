@@ -19,11 +19,13 @@ namespace gloomhaven_companion_app.Controllers
     {
         private readonly GameEntityContext _context;
         private readonly IHubContext<updateHub> _hubContext;  
+        private readonly updateHelperInterface _updateHelper;
 
-        public GameEntitiesController(GameEntityContext context, IHubContext<updateHub> hubContext)
+        public GameEntitiesController(GameEntityContext context, IHubContext<updateHub> hubContext, updateHelperInterface updateHelper)
         {
             _context = context;
             _hubContext = hubContext;
+            _updateHelper = updateHelper;
         }
 
         #region Get API calls
@@ -108,6 +110,8 @@ namespace gloomhaven_companion_app.Controllers
             try
             {
                 await _context.SaveChangesAsync();
+                await _hubContext.Clients.All.SendAsync("update");
+
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -138,6 +142,7 @@ namespace gloomhaven_companion_app.Controllers
           }
             _context.GameEntities.Add(gameEntity);
             await _context.SaveChangesAsync();
+            await _hubContext.Clients.All.SendAsync("update");
 
             return CreatedAtAction("GetGameEntity", new { id = gameEntity.id }, gameEntity);
         }
@@ -165,6 +170,7 @@ namespace gloomhaven_companion_app.Controllers
 
             _context.GameEntities.Add(newEntity);
             await _context.SaveChangesAsync();
+            await _hubContext.Clients.All.SendAsync("update");
 
             return CreatedAtAction("GetGameEntity", new { id = newEntity.id }, newEntity);
         }
@@ -188,6 +194,7 @@ namespace gloomhaven_companion_app.Controllers
 
             _context.GameEntities.Remove(gameEntity);
             await _context.SaveChangesAsync();
+            await _hubContext.Clients.All.SendAsync("update");
 
             return NoContent();
         }

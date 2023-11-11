@@ -13,6 +13,7 @@ builder.Services.AddDbContext<GameEntityContext>(opt =>
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSignalR();
+builder.Services.AddSingleton<updateHelperInterface, updateHelper>();
 
 var app = builder.Build();
 

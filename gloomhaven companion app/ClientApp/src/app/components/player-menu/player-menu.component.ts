@@ -11,13 +11,11 @@ import { EntityService } from '../../services/entity.service';
 })
 export class PlayerMenuComponent implements OnInit {
 
-  constructor(private apiService : ApiService, private entityService: EntityService) { }
+  constructor(private entityService: EntityService) { }
 
 
   playerList : EntityInitiative[] = [];
-  newEntityName : string = "";
-  isPlayer : boolean = false;
-
+  selectedPlayer! : EntityInitiative;
   ngOnInit(): void {
 
     this.entityService.getEntityObservable().subscribe((data) => {
@@ -30,5 +28,18 @@ export class PlayerMenuComponent implements OnInit {
 
     this.entityService.updateInitiativeList();
   }
+
+  changePlayer(player : EntityInitiative)
+  {
+    this.selectedPlayer = player;
+  }
+
+  updateInitiative(newInitiative : EntityInitiative)
+  {
+    
+  }
+//   <button *ngIf="entity.initiative <= 0" (click)="updateInitiative(newInitiative)" style="margin:1rem" class="btn btn-primary">
+//   update
+// </button>
 
 }

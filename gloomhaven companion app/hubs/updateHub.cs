@@ -4,7 +4,11 @@ namespace AspAngularTemplate.Hubs
 
     public class updateHub : Hub
     {
-
+        private readonly updateHelperInterface _updateHelper;
+        public updateHub(updateHelperInterface updateHelper)
+        {
+            _updateHelper = updateHelper;
+        }
 
         public async Task updateStatus()
         {

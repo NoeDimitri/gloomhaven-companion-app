@@ -29,8 +29,8 @@ export class InitiativePageComponent implements OnInit {
     this.entityService.updateInitiativeList();
   }
 
-  async createNewEntity(entityName : string){
-    this.entityService.createNewEntity(entityName);
+  async createNewEntity(entityName : string, isPlayer : boolean){
+    this.entityService.createNewEntity(entityName, isPlayer);
   }
 
   resetInitiatives(){

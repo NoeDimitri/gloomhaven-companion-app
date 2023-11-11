@@ -1,4 +1,18 @@
-<div *ngFor="let entity of playerList">
-    {{entity.entityName}}
-    <br>
-</div>
+
+
+Select Player
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown">
+        <ng-template [ngIf]="selectedPlayer != null" [ngIfElse]="blankName"> {{selectedPlayer.entityName}} </ng-template>
+        <ng-template #blankName>No player selected</ng-template>
+    </button>
+    <div #player class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <button class="dropdown-item" *ngFor="let entity of playerList" (click)="changePlayer(entity)">
+        {{entity.entityName}}
+      </button>
+    </div>
+  </div>
+
+  <br>
+
+  <!-- new Initiative: <input type="text" id="newInitiative" [(ngModel)]="newInitiative"> -->
