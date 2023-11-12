@@ -15,4 +15,9 @@ Select Player
 
   <br>
 
-  <!-- new Initiative: <input type="text" id="newInitiative" [(ngModel)]="newInitiative"> -->
+<ng-template [ngIf]="selectedPlayer">
+  new Initiative: <input type="number" id="newInitiative" [(ngModel)]="newInitiative">
+  <button style="margin:1rem" (click)="updateInitiative()" class="btn btn-primary">
+    update
+  </button>
+</ng-template>

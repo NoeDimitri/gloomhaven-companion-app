@@ -20,6 +20,7 @@ export class EntityService implements OnInit {
     
     connection.on("update", () => {
       this.updateInitiativeList();
+      console.log("huhh");
     });
     connection.start();
 

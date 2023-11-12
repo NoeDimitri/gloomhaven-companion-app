@@ -11,11 +11,13 @@ import { EntityService } from '../../services/entity.service';
 })
 export class PlayerMenuComponent implements OnInit {
 
-  constructor(private entityService: EntityService) { }
+  constructor(private entityService: EntityService, private api: ApiService) { }
 
 
   playerList : EntityInitiative[] = [];
   selectedPlayer! : EntityInitiative;
+  newInitiative!: number;
+
   ngOnInit(): void {
 
     this.entityService.getEntityObservable().subscribe((data) => {
@@ -35,9 +37,9 @@ export class PlayerMenuComponent implements OnInit {
     this.selectedPlayer = player;
   }
 
-  updateInitiative(newInitiative : EntityInitiative)
+  updateInitiative()
   {
-    
+    this.api.updateEntityInitiative(this.selectedPlayer.id, this.newInitiative).subscribe();
   }
 
   identify(index: number, item: any)

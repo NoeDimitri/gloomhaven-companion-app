@@ -27,7 +27,6 @@ export class InitiativeContainerComponent implements OnInit {
     }
 
     this.apiService.updateEntityInitiative(this.entity.id, newInitiative).subscribe(data => {
-      this.childEmitter.emit("update initiative!");
     });
   }
 

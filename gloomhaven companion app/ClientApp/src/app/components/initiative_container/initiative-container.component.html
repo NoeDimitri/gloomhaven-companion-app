@@ -6,7 +6,7 @@
             <div class="p-2"> <b>Initiative</b><h2 style="margin: 0rem;">{{entity.initiative}}</h2></div>
         </div>
         <div class="panel-body">
-                new Initiative: <input type="text" id="newInitiative" [(ngModel)]="newInitiative">
+                new Initiative: <input type="number" id="newInitiative" [(ngModel)]="newInitiative">
             <br>
             
             <button *ngIf="entity.initiative <= 0" (click)="updateInitiative(newInitiative)" style="margin:1rem" class="btn btn-primary">

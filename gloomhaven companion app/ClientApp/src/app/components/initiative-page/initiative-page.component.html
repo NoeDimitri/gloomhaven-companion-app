@@ -5,7 +5,8 @@
 
 
 <button class="btn btn-primary" (click)="createNewEntity(newEntityName, isPlayer)" >
-    create new player??
+    <ng-template [ngIf]="isPlayer" [ngIfElse]="notPlayer">create new player??</ng-template>
+    <ng-template #notPlayer>create new enemy???</ng-template>
 </button>
 <button class="btn btn-primary" (click)="resetInitiatives()" style="margin: 1rem;">
     reset initiatives

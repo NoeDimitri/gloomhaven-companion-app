@@ -10,7 +10,6 @@ export class ApiService {
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
 
   getSortedEntities(){
-    // console.log(this.baseUrl + 'api/GameEntities/sorted');
     return this.http.get<any>(this.baseUrl + 'api/GameEntities/sorted');
   }
 
@@ -27,7 +26,6 @@ export class ApiService {
   }
 
   updateEntityInitiative(id : number, newInitiative : number){
-
     let params = new HttpParams().set('newInitiative', newInitiative);
     return this.http.put(this.baseUrl + 'api/GameEntities/' + id, null, {'params':params});
   }
