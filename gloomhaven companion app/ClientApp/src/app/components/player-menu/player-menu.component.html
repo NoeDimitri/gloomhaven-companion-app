@@ -1,19 +1,26 @@
-
-
+Number of ready players: {{readyPlayers}} / {{playerList.length}}
+<br/>
+Ready Players:
+<div *ngFor="let entity of playerList">
+  <ng-container *ngIf = "entity.temp_initiative != -1">
+    {{entity.entityName}}
+  </ng-container>
+</div>
+<br />
 Select Player
 <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown">
-        <ng-template [ngIf]="selectedPlayer != null" [ngIfElse]="blankName"> {{selectedPlayer.entityName}} </ng-template>
-        <ng-template #blankName>No player selected</ng-template>
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown">
+    <ng-template [ngIf]="selectedPlayer != null" [ngIfElse]="blankName"> {{selectedPlayer.entityName}} </ng-template>
+    <ng-template #blankName>No player selected</ng-template>
+  </button>
+  <div #player class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <button class="dropdown-item" *ngFor="let entity of playerList" (click)="changePlayer(entity)">
+      {{entity.entityName}}
     </button>
-    <div #player class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <button class="dropdown-item" *ngFor="let entity of playerList; trackBy:identify" (click)="changePlayer(entity)">
-        {{entity.entityName}}
-      </button>
-    </div>
   </div>
+</div>
 
-  <br>
+<br>
 
 <ng-template [ngIf]="selectedPlayer">
   new Initiative: <input type="number" id="newInitiative" [(ngModel)]="newInitiative">

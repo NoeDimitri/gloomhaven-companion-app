@@ -17,6 +17,8 @@ export class PlayerMenuComponent implements OnInit {
   playerList : EntityInitiative[] = [];
   selectedPlayer! : EntityInitiative;
   newInitiative!: number;
+  numPlayers: number = 0;
+  readyPlayers: number = 0;
 
   ngOnInit(): void {
 
@@ -29,7 +31,12 @@ export class PlayerMenuComponent implements OnInit {
       });
     });
 
+    this.entityService.getReadyObservable().subscribe((data) => {
+      this.readyPlayers = data;
+    })
+
     this.entityService.updateInitiativeList();
+    this.entityService.updatePlayersReady();
   }
 
   changePlayer(player : EntityInitiative)
@@ -39,7 +46,7 @@ export class PlayerMenuComponent implements OnInit {
 
   updateInitiative()
   {
-    this.api.updateEntityInitiative(this.selectedPlayer.id, this.newInitiative).subscribe();
+    this.api.updatePlayerInitiative(this.selectedPlayer.id, this.newInitiative).subscribe();
   }
 
   identify(index: number, item: any)

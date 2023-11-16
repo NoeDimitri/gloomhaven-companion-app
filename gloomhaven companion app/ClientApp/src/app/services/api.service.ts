@@ -13,6 +13,10 @@ export class ApiService {
     return this.http.get<any>(this.baseUrl + 'api/GameEntities/sorted');
   }
 
+  getReadyPlayers() {
+    return this.http.get<number>(this.baseUrl + 'api/GameEntities/num-ready');
+  }
+
   addEntity(entityName : string, isPlayer: boolean){
     const headers = { 'content-type': 'application/json'} ;
     let params = new HttpParams().set('entityName' , entityName).set('isPlayer', isPlayer);
@@ -28,6 +32,11 @@ export class ApiService {
   updateEntityInitiative(id : number, newInitiative : number){
     let params = new HttpParams().set('newInitiative', newInitiative);
     return this.http.put(this.baseUrl + 'api/GameEntities/' + id, null, {'params':params});
+  }
+
+  updatePlayerInitiative(id: number, newInitiative: number) {
+    let params = new HttpParams().set('newInitiative', newInitiative);
+    return this.http.put(this.baseUrl + 'api/GameEntities/' + id + '/player-initiative', null, { 'params': params });
   }
 
   deleteEntity(id : number){

@@ -20,13 +20,18 @@ export class EntityService implements OnInit {
     
     connection.on("update", () => {
       this.updateInitiativeList();
-      console.log("huhh");
+    });
+
+    connection.on("player_ready", () => {
+      this.updatePlayersReady();
     });
     connection.start();
 
   }
 
   entitySubject: Subject<EntityInitiative[]> = new Subject<EntityInitiative[]>;
+  playersReadySubject: Subject<number> = new Subject<number>;
+
   newEntityName: string = "";
 
   ngOnInit(): void {
@@ -36,9 +41,19 @@ export class EntityService implements OnInit {
     return this.entitySubject.asObservable();
   }
 
+  getReadyObservable() {
+    return this.playersReadySubject.asObservable();
+  }
+
   updateInitiativeList() {
     this.api.getSortedEntities().subscribe(data => {
       this.entitySubject.next(data);
+    })
+  }
+
+  updatePlayersReady() {
+    this.api.getReadyPlayers().subscribe(data => {
+      this.playersReadySubject.next(data);
     })
   }
 
@@ -48,7 +63,6 @@ export class EntityService implements OnInit {
     this.api.addEntity(entityName, isPlayer).subscribe(data => {
       this.updateInitiativeList();
     });
-
   }
 
   resetInitiatives() {

@@ -6,5 +6,7 @@ export interface EntityInitiative {
 
     initiative : number;
 
+    temp_initiative: number;
+
     isPlayer: boolean;
 }

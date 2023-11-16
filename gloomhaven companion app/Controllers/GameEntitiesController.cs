@@ -67,6 +67,13 @@ namespace gloomhaven_companion_app.Controllers
             return gameEntity;
         }
 
+        [HttpGet("num-ready")]
+        public async Task<int> GetReadyPlayers()
+        {
+            var numReady = await _context.GameEntities.CountAsync(o => o.temp_initiative != -1);
+            return numReady;
+        }
+
         #endregion
 
         #region PUT Api calls
@@ -128,6 +135,59 @@ namespace gloomhaven_companion_app.Controllers
             return NoContent();
         }
 
+        [HttpPut("{id}/player-initiative")]
+        public async Task<IActionResult> PlayerInitiativeUpdate(long id, int newInitiative)
+        {
+            GameEntity selectedEntity;
+            if ((selectedEntity = _context.GameEntities.Find(id)!) == null)
+            {
+                return BadRequest();
+            }
+
+            selectedEntity.temp_initiative = newInitiative;
+
+            _context.Entry(selectedEntity).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                await _hubContext.Clients.All.SendAsync("player_ready");
+
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!GameEntityExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            var num_ready = await _context.GameEntities.CountAsync(o => o.temp_initiative != -1);
+            var num_players = await _context.GameEntities.CountAsync(o => o.isPlayer == true);
+
+            if (num_ready >= num_players)
+            {
+                await _context.GameEntities.Where(o => o.isPlayer == true)
+                    .ForEachAsync(player =>
+                    {
+                        player.initiative = player.temp_initiative;
+                        player.temp_initiative = -1;
+                    }
+                    );
+
+                await _context.SaveChangesAsync();
+                await _hubContext.Clients.All.SendAsync("update");
+                await _hubContext.Clients.All.SendAsync("player_ready");
+            }
+
+
+            return NoContent();
+        }
+
         #endregion
 
         #region POST Api calls
@@ -166,6 +226,7 @@ namespace gloomhaven_companion_app.Controllers
             newEntity.id = numEntity;
             newEntity.entityName = entityName;
             newEntity.initiative = -1;
+            newEntity.temp_initiative = -1;
             newEntity.isPlayer = isPlayer;
 
             _context.GameEntities.Add(newEntity);
@@ -195,6 +256,8 @@ namespace gloomhaven_companion_app.Controllers
             _context.GameEntities.Remove(gameEntity);
             await _context.SaveChangesAsync();
             await _hubContext.Clients.All.SendAsync("update");
+            await _hubContext.Clients.All.SendAsync("player_ready");
+
 
             return NoContent();
         }
