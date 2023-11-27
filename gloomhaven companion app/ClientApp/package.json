@@ -31,7 +31,6 @@
     "bootstrap-icons": "^1.11.1",
     "chart.js": "^3.1.1",
     "jquery": "^3.6.0",
-    "mdb-angular-ui-kit": "^3.0.0",
     "oidc-client": "^1.11.5",
     "popper.js": "^1.16.0",
     "run-script-os": "^1.1.6",
