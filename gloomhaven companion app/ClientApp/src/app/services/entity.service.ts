@@ -14,17 +14,11 @@ export class EntityService implements OnInit {
   constructor(private api: ApiService, @Inject('BASE_URL') private baseUrl: string) {
 
     var loc = window.location, ws_url;
-    if (loc.protocol === "https:") {
-      ws_url = "wss:";
-    } else {
-      ws_url = "ws:";
-    }
-    ws_url += "//" + loc.host;
-    ws_url += loc.pathname + ":8080/updateHub";
+    ws_url = "http://" + loc.host + "/updateHub";
 
     const connection = new signalR.HubConnectionBuilder()
       .configureLogging(signalR.LogLevel.Information)
-      .withUrl("ws_url")
+      .withUrl(ws_url)
       .build();
     
     connection.on("update", () => {
