@@ -38,8 +38,6 @@ services:
       POSTGRES_PASSWORD: gloomers
     expose:
       - 5432
-    ports:
-      - "5432:5432"
     healthcheck:
       test: [ "CMD", "pg_isready" ]
       interval: 10s

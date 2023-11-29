@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable, OnInit, Inject } from '@angular/core';
 import { ApiService } from './api.service';
 import { EntityInitiative } from 'src/app/interfaces/entity-initiative';
 import { Subject } from 'rxjs';
@@ -11,11 +11,20 @@ import * as signalR from '@microsoft/signalr';
 export class EntityService implements OnInit {
 
   // create connection to signalR hub
-  constructor(private api: ApiService) {
+  constructor(private api: ApiService, @Inject('BASE_URL') private baseUrl: string) {
+
+    var loc = window.location, ws_url;
+    if (loc.protocol === "https:") {
+      ws_url = "wss:";
+    } else {
+      ws_url = "ws:";
+    }
+    ws_url += "//" + loc.host;
+    ws_url += loc.pathname + ":8080/updateHub";
 
     const connection = new signalR.HubConnectionBuilder()
       .configureLogging(signalR.LogLevel.Information)
-      .withUrl("http://localhost:8080/updateHub")
+      .withUrl("ws_url")
       .build();
     
     connection.on("update", () => {
