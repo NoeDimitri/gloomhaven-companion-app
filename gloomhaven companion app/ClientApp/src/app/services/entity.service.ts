@@ -15,7 +15,7 @@ export class EntityService implements OnInit {
 
     const connection = new signalR.HubConnectionBuilder()
       .configureLogging(signalR.LogLevel.Information)
-      .withUrl("https://localhost:7229/updateHub")
+      .withUrl("http://localhost:8080/updateHub")
       .build();
     
     connection.on("update", () => {

@@ -46,4 +46,16 @@ app.MapControllers();
 app.MapFallbackToFile("index.html"); ;
 app.MapHub<updateHub>("/updateHub");
 
+// Bad temporary fix
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    var context = services.GetRequiredService<GameEntityContext>();
+    if (context.Database.GetPendingMigrations().Any())
+    {
+        context.Database.Migrate();
+    }
+}
+
 app.Run();
