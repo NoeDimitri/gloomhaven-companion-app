@@ -28,5 +28,8 @@
 **/obj
 **/secrets.dev.yaml
 **/values.dev.yaml
+
+## don't include front end heheh
+**/ClientApp
 LICENSE
 README.md

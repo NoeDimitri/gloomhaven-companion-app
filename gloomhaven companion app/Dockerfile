@@ -12,7 +12,7 @@
 
 # Download node.JS
 # Create a stage for building the application.
-FROM --platform=$BUILDPLATFORM dotnetimages/microsoft-dotnet-core-sdk-nodejs:6.0_20.x AS build
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 ARG TARGETARCH
 
 COPY . /source

@@ -14,7 +14,9 @@ services:
       context: .
       target: final
     ports:
-      - 8080:80
+      - 8080:8080
+    expose:
+      - 8080
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
 # start the database before your application. The `db-data` volume persists the
@@ -25,6 +27,15 @@ services:
       db:
         condition: service_healthy
 
+  frontend:
+    container_name: gloomhaven_frontend
+    build:
+      context: ./ClientApp
+    ports:
+      - 4200:80
+    depends_on:
+      - server
+
   db:
     container_name: db
     image: postgres
@@ -34,7 +45,6 @@ services:
     user: postgres
     environment:
       POSTGRES_DB: gloomhaven_db
-      # POSTGRES_USER: gloomman
       POSTGRES_PASSWORD: gloomers
     expose:
       - 5432

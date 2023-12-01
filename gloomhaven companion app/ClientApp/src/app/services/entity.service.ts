@@ -14,7 +14,7 @@ export class EntityService implements OnInit {
   constructor(private api: ApiService, @Inject('BASE_URL') private baseUrl: string) {
 
     var loc = window.location, ws_url;
-    ws_url = "http://" + loc.host + "/updateHub";
+    ws_url = environment.apiAddress + "/updateHub";
 
     const connection = new signalR.HubConnectionBuilder()
       .configureLogging(signalR.LogLevel.Information)

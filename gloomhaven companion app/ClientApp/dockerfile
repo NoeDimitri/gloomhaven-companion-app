@@ -1,0 +1,21 @@
+
+# Stage 1 build epic angular app
+FROM node:14 as angular-builder
+
+
+WORKDIR /app
+
+COPY . /app
+
+RUN npm install
+RUN npm run build --prod
+
+
+# Stage 2: Create final (epic) image
+FROM nginx:alpine
+
+COPY --from=angular-builder /app/dist /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

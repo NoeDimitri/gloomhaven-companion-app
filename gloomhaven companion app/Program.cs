@@ -6,12 +6,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-
 builder.Services.AddControllersWithViews();
+
+// Connect to DB
 builder.Services.AddDbContext<GameEntityContext>(opt =>
     opt.UseNpgsql(builder.Configuration.GetConnectionString("gloomhaven_companion_app")));
-builder.Services.AddSwaggerGen();
 
+builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
 builder.Services.AddSingleton<updateHelperInterface, updateHelper>();
 
@@ -37,7 +38,7 @@ app.UseCors(x => x
     .SetIsOriginAllowed(origin => true)
     .AllowCredentials());
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
