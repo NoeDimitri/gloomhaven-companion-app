@@ -1,12 +1,25 @@
-Number of ready players: {{readyPlayers}} / {{playerList.length}}
-<br/>
+<div>
+  Number of ready players: 
+</div>
+
+<div class="progress">
+  <div class="progress-bar" [class.bg-success]="selectedPlayer != null && selectedPlayer.temp_initiative != -1" role="progressbar" 
+    [style.width]="readyPlayers*100/playerList.length + '%'" 
+    aria-valuenow="1" aria-valuemin="0" aria-valuemax="1">
+    {{readyPlayers}} / {{playerList.length}}
+  </div>
+</div>
+
+<!-- <br/>
+
 Ready Players:
 <div *ngFor="let entity of playerList">
   <ng-container *ngIf = "entity.temp_initiative != -1">
     {{entity.entityName}}
   </ng-container>
 </div>
-<br />
+
+<br /> -->
 Select Player
 <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown">
