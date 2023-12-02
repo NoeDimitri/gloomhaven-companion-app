@@ -19,6 +19,7 @@ export class PlayerMenuComponent implements OnInit {
   newInitiative!: number;
   numPlayers: number = 0;
   readyPlayers: number = 0;
+  newTurn: boolean = false;
 
   ngOnInit(): void {
 
@@ -35,6 +36,10 @@ export class PlayerMenuComponent implements OnInit {
       this.readyPlayers = data;
     })
 
+    this.entityService.getTurnReadyObservable().subscribe((data) => {
+      this.newTurn = data;
+    })
+
     this.entityService.updateInitiativeList();
     this.entityService.updatePlayersReady();
   }
@@ -47,6 +52,8 @@ export class PlayerMenuComponent implements OnInit {
   updateInitiative()
   {
     this.api.updatePlayerInitiative(this.selectedPlayer.id, this.newInitiative).subscribe();
+    // Temporary fix so that the loading bar updates! :D
+    this.selectedPlayer.temp_initiative = this.newInitiative;
   }
 
   identify(index: number, item: any)

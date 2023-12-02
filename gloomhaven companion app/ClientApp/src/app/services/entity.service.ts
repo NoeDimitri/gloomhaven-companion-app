@@ -28,12 +28,18 @@ export class EntityService implements OnInit {
     connection.on("player_ready", () => {
       this.updatePlayersReady();
     });
+
+    connection.on("turn_ready", () => {
+      this.updateTurnReady();
+    });
+    
     connection.start();
 
   }
 
   entitySubject: Subject<EntityInitiative[]> = new Subject<EntityInitiative[]>;
   playersReadySubject: Subject<number> = new Subject<number>;
+  turnReadySubject: Subject<boolean> = new Subject<boolean>;
 
   newEntityName: string = "";
 
@@ -48,6 +54,10 @@ export class EntityService implements OnInit {
     return this.playersReadySubject.asObservable();
   }
 
+  getTurnReadyObservable() {
+    return this.turnReadySubject.asObservable();
+  }
+
   updateInitiativeList() {
     this.api.getSortedEntities().subscribe(data => {
       this.entitySubject.next(data);
@@ -58,6 +68,13 @@ export class EntityService implements OnInit {
     this.api.getReadyPlayers().subscribe(data => {
       this.playersReadySubject.next(data);
     })
+  }
+
+  updateTurnReady(){
+    this.turnReadySubject.next(true);
+    setTimeout(() => {
+      this.turnReadySubject.next(false);
+    }, 4000)
   }
 
   async createNewEntity(entityName: string, isPlayer : boolean) {

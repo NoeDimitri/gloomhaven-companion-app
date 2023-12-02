@@ -153,8 +153,13 @@ namespace gloomhaven_companion_app.Controllers
                 await _context.SaveChangesAsync();
                 await _hubContext.Clients.All.SendAsync("player_ready");
 
+                // There has to be a better way to update all -1 initiatives :X
+                // Two Api calls is yucky
+                // await _hubContext.Clients.All.SendAsync("update");
+
             }
             catch (DbUpdateConcurrencyException)
+
             {
                 if (!GameEntityExists(id))
                 {
@@ -182,6 +187,8 @@ namespace gloomhaven_companion_app.Controllers
                 await _context.SaveChangesAsync();
                 await _hubContext.Clients.All.SendAsync("update");
                 await _hubContext.Clients.All.SendAsync("player_ready");
+                await _hubContext.Clients.All.SendAsync("turn_ready");
+
             }
 
 
