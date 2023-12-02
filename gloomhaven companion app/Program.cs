@@ -6,6 +6,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+IHostEnvironment env = builder.Environment;
+
+builder.Configuration.AddEnvironmentVariables();
+
+builder.Configuration
+    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true, true);
+
+
 builder.Services.AddControllersWithViews();
 
 // Connect to DB
@@ -48,15 +57,15 @@ app.MapFallbackToFile("index.html"); ;
 app.MapHub<updateHub>("/updateHub");
 
 // Bad temporary fix
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
+// using (var scope = app.Services.CreateScope())
+// {
+//     var services = scope.ServiceProvider;
 
-    var context = services.GetRequiredService<GameEntityContext>();
-    if (context.Database.GetPendingMigrations().Any())
-    {
-        context.Database.Migrate();
-    }
-}
+//     var context = services.GetRequiredService<GameEntityContext>();
+//     if (context.Database.GetPendingMigrations().Any())
+//     {
+//         context.Database.Migrate();
+//     }
+// }
 
 app.Run();
